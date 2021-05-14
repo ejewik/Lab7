@@ -37,7 +37,7 @@ class JournalEntry extends HTMLElement {
                 margin: 10px 0;
                 text-indent: 30px;
             }
-
+lr
             .entry-date {
                 color: rgb(163, 163, 163);
                 font-size: 20px;
