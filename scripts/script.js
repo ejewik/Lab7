@@ -13,24 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
   let main = document.querySelector('main');
   let body = document.querySelector('body');
 
-  home.addEventListener('click', function() {
+  home.addEventListener('click', function () {
     setState("home", home);
   });
 
-  settings.addEventListener('click', function() {
+  settings.addEventListener('click', function () {
     setState("settings", settings);
   });
 
-  history.pushState("home", "title", "index.html");
+  history.pushState("home", "title", "");
 
-  window.onpopstate = function(event) {
+  window.onpopstate = function (event) {
     let entryPage = document.querySelector('entry-page');
     entryPage.remove();
-   
-    if(event.state == 'home') {
-      main.insertAdjacentHTML('afterend', '<entry-page><entry-page>')
-      body.classList.remove("single-entry");
-      body.classList.add("home");
+    main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
+
+    let entryPageElement = document.querySelector('entry-page');
+    let bodyElement = document.querySelector('body');
+    if (event.state == 'home') {
+      body.className = "home";
+    } else if (event.state == "settings") {
+      body.className = "settings";
+    } else {
+      let id = event.state.substring(7, 8);
+      let journalEntryElement = document.getElementById(id);
+      body.className = "single-entry";
+      entryPageElement.entry = journalEntryElement.entry;
     }
   };
 
@@ -41,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let newPost = document.createElement('journal-entry');
         newPost.id = counter;
         counter = counter + 1;
-        newPost.addEventListener('click', function() {
+        newPost.addEventListener('click', function () {
           setState("/#entry" + newPost.id, newPost);
         });
         newPost.entry = entry;

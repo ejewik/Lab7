@@ -38,16 +38,33 @@ router.setState = function (id, journalEntryElement) {
 
   let entryPageElement = document.querySelector('entry-page');
   let bodyElement = document.querySelector('body');
-
-  history.pushState(id, "title", id);
+  let main = document.querySelector('main');
+  //history.pushState(id, "title", id);
 
   if (id == "settings") {
+    let entryPage = document.querySelector('entry-page');
+    entryPage.remove();
+    main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
+    console.log(id);
+    bodyElement.className = "settings";
+    history.pushState("settings", "", "#settings");
 
   } else if (id == "home") {
+    let entryPage = document.querySelector('entry-page');
+    entryPage.remove();
+    main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
+    console.log(id);
+    bodyElement.className = "home";
+    history.pushState("home", "", "");
 
   } else {
-    bodyElement.classList.add("single-entry");
-    bodyElement.classList.remove("home");
+    console.log(id);
+    bodyElement.className = "single-entry";
+    history.pushState(id, "", id);
+    console.log(entryPageElement.entry);
+    console.log(journalEntryElement.entry);
+    //bodyElement.classList.add("single-entry");
+    //bodyElement.classList.remove("home");
     entryPageElement.entry = journalEntryElement.entry;
   }
 
