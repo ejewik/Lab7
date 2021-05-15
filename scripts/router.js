@@ -37,38 +37,32 @@ router.setState = function (id, journalEntryElement) {
    */
 
   let entryPageElement = document.querySelector('entry-page');
-  let bodyElement = document.querySelector('body');
+  let body = document.querySelector('body');
   let main = document.querySelector('main');
-  //history.pushState(id, "title", id);
 
   if (id == "settings") {
+
     let entryPage = document.querySelector('entry-page');
     entryPage.remove();
     main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
-    console.log(id);
-    bodyElement.className = "settings";
+    body.className = "settings";
     history.pushState("settings", "", "#settings");
 
   } else if (id == "home") {
+
     let entryPage = document.querySelector('entry-page');
     entryPage.remove();
     main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
-    console.log(id);
-    bodyElement.className = "home";
+    body.className = "home";
     history.pushState("home", "", "");
 
   } else {
-    console.log(id);
-    bodyElement.className = "single-entry";
+
+    body.className = "single-entry";
     history.pushState(id, "", id);
-    console.log(entryPageElement.entry);
-    console.log(journalEntryElement.entry);
-    //bodyElement.classList.add("single-entry");
-    //bodyElement.classList.remove("home");
     entryPageElement.entry = journalEntryElement.entry;
+
   }
-
-
 }
 
 

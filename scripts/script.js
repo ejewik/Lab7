@@ -2,9 +2,7 @@
 
 import { router } from './router.js'; // Router imported so you can use it to manipulate your SPA app here
 const setState = router.setState;
-// window.addEventListener('load', setState);
 // Make sure you register your service worker here too
-
 
 document.addEventListener('DOMContentLoaded', () => {
   let counter = 0;
@@ -21,24 +19,32 @@ document.addEventListener('DOMContentLoaded', () => {
     setState("settings", settings);
   });
 
-  history.pushState("home", "title", "");
+  history.pushState("home", "", "");
 
   window.onpopstate = function (event) {
+
+    // on back button press remove entry page from the DOM and insert blank page
     let entryPage = document.querySelector('entry-page');
     entryPage.remove();
     main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
+    let newEntryPage = document.querySelector('entry-page');
 
-    let entryPageElement = document.querySelector('entry-page');
-    let bodyElement = document.querySelector('body');
-    if (event.state == 'home') {
+    if (event.state == "home") {
+
       body.className = "home";
+
     } else if (event.state == "settings") {
+
       body.className = "settings";
+
     } else {
+
+      // get journal entry id from state
       let id = event.state.substring(7, 8);
       let journalEntryElement = document.getElementById(id);
       body.className = "single-entry";
-      entryPageElement.entry = journalEntryElement.entry;
+      newEntryPage.entry = journalEntryElement.entry;
+
     }
   };
 
@@ -46,14 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(entries => {
       entries.forEach(entry => {
+
         let newPost = document.createElement('journal-entry');
         newPost.id = counter;
         counter = counter + 1;
+
         newPost.addEventListener('click', function () {
           setState("/#entry" + newPost.id, newPost);
         });
+
         newPost.entry = entry;
         document.querySelector('main').appendChild(newPost);
+
       });
     });
 });
