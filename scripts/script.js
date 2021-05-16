@@ -5,7 +5,7 @@ const setState = router.setState;
 // Make sure you register your service worker here too
 
 document.addEventListener('DOMContentLoaded', () => {
-  let counter = 0;
+  let counter = 1;
   let home = document.querySelector('h1');
   let settings = document.querySelector('img')
   let main = document.querySelector('main');
@@ -29,9 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
     let newEntryPage = document.querySelector('entry-page');
 
+
     if (event.state == "home") {
 
-      body.className = "home";
+      body.removeAttribute('class');
 
     } else if (event.state == "settings") {
 
@@ -40,12 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
 
       // get journal entry id from state
-      let id = event.state.substring(7, 8);
+      let id = event.state;
       let journalEntryElement = document.getElementById(id);
       body.className = "single-entry";
       newEntryPage.entry = journalEntryElement.entry;
-
     }
+
   };
 
   fetch('https://cse110lab6.herokuapp.com/entries')
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         counter = counter + 1;
 
         newPost.addEventListener('click', function () {
-          setState("/#entry" + newPost.id, newPost);
+          setState(newPost.id, newPost);
         });
 
         newPost.entry = entry;

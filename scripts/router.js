@@ -36,31 +36,45 @@ router.setState = function (id, journalEntryElement) {
    *    2. You may modify the parameters of setState() as much as you like
    */
 
-  let entryPageElement = document.querySelector('entry-page');
+  let entryPage = document.querySelector('entry-page');
+  let title = document.querySelector('h1');
   let body = document.querySelector('body');
   let main = document.querySelector('main');
 
+
   if (id == "settings") {
 
-    let entryPage = document.querySelector('entry-page');
+
     entryPage.remove();
     main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
+    title.innerHTML = 'Settings';
     body.className = "settings";
-    history.pushState("settings", "", "#settings");
+
+    // dont push to history stack if state on top of stack matches one you're trying to push
+    if(history.state != id) {
+      history.pushState("settings", "", "#settings");
+    }
 
   } else if (id == "home") {
 
-    let entryPage = document.querySelector('entry-page');
     entryPage.remove();
     main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
-    body.className = "home";
-    history.pushState("home", "", "");
+    title.innerHTML = 'Journal Entries';
+    body.removeAttribute('class');
+
+    if(history.state != id){
+      history.pushState("home", "", "/");
+    }
 
   } else {
 
     body.className = "single-entry";
-    history.pushState(id, "", id);
-    entryPageElement.entry = journalEntryElement.entry;
+    title.innerHTML = `Entry ${id}`;
+    entryPage.entry = journalEntryElement.entry;
+
+    if(history.state != id) {
+      history.pushState(id, "", `#entry${id}`);
+    }
 
   }
 }
