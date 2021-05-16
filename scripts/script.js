@@ -33,10 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.state == "home") {
 
       body.removeAttribute('class');
+      home.innerHTML = 'Journal Entries';
 
     } else if (event.state == "settings") {
 
       body.className = "settings";
+      home.innerHTML = 'Settings';
 
     } else {
 
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let id = event.state;
       let journalEntryElement = document.getElementById(id);
       body.className = "single-entry";
+      home.innerHTML = `Entry ${id}`;
       newEntryPage.entry = journalEntryElement.entry;
     }
 

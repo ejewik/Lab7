@@ -37,7 +37,7 @@ router.setState = function (id, journalEntryElement) {
    */
 
   let entryPage = document.querySelector('entry-page');
-  let title = document.querySelector('h1');
+  let home = document.querySelector('h1');
   let body = document.querySelector('body');
   let main = document.querySelector('main');
 
@@ -47,7 +47,7 @@ router.setState = function (id, journalEntryElement) {
 
     entryPage.remove();
     main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
-    title.innerHTML = 'Settings';
+    home.innerHTML = 'Settings';
     body.className = "settings";
 
     // dont push to history stack if state on top of stack matches one you're trying to push
@@ -59,7 +59,7 @@ router.setState = function (id, journalEntryElement) {
 
     entryPage.remove();
     main.insertAdjacentHTML('afterend', '<entry-page><entry-page>');
-    title.innerHTML = 'Journal Entries';
+    home.innerHTML = 'Journal Entries';
     body.removeAttribute('class');
 
     if(history.state != id){
@@ -69,7 +69,7 @@ router.setState = function (id, journalEntryElement) {
   } else {
 
     body.className = "single-entry";
-    title.innerHTML = `Entry ${id}`;
+    home.innerHTML = `Entry ${id}`;
     entryPage.entry = journalEntryElement.entry;
 
     if(history.state != id) {
